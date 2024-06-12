@@ -1,0 +1,38 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Sales Forecast</h1>
+        <button id="aprsep-btn">Predict Sales for April-September 2024</button>
+        <button id="yearly-btn">Predict Sales for October 2024 - September 2025</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#aprsep-btn').click(function() {
+                $.get('/aprsep', function(data) {
+                    $('#result').html('<h2>April-September 2024 Predictions</h2>');
+                    data.forEach(function(item) {
+                        $('#result').append('<p>' + item.Date + ': ' + item.Predicted_Total_Sales + '</p>');
+                    });
+                });
+            });
+            $('#yearly-btn').click(function() {
+                $.get('/yearly', function(data) {
+                    $('#result').html('<h2>October 2024 - September 2025 Predictions</h2>');
+                    data.forEach(function(item) {
+                        $('#result').append('<p>' + item.Date + ': ' + item.Predicted_Total_Sales + '</p>');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
